@@ -1,0 +1,55 @@
+package backend.analyzers;
+import java_cup.runtime.Symbol;
+
+parser code {:
+        public parser(AnalizadorLexico lex) { 
+            super(lex);   
+	}
+        public void syntax_error(Symbol s){
+            System.out.println("ERROR: "+" Error Sintaxis token: " + s.value);
+        }
+        public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+            
+        }
+        
+:}
+
+/* Terminals (tokens returned by the scanner). */
+terminal           DPUNTO,SHORT,IGUAL,VAR,MAS, MENOS,POR, DIV,PARA,PARC,INTEGER,BOOLEAN,STRING,DOUBLE,COMA;
+terminal Integer   INTEGERVAL;
+terminal String    ID,STRINGVAL;
+terminal Double    DOUBLEVAL; 
+/* Non-terminals */
+non terminal            s,declararVar,valor,tipo;
+non terminal Integer operacion;
+
+precedence left MAS, MENOS; 
+precedence left POR, DIV;
+
+/* The grammar */
+start with s;
+
+s ::=  VAR declararVar
+;
+
+declararVar::= ID COMA declararVar
+            |  ID DPUNTO tipo
+            |  ID IGUAL valor COMA declararVar
+            |   ID IGUAL valor DPUNTO tipo
+;
+
+valor ::= valor:a MAS valor:e 
+               |  valor:a MENOS valor:e 
+               |  valor:a POR valor:e 
+               |  valor:a DIV valor:e 
+               |  PARA valor:e PARC 
+               |  INTEGERVAL:e
+               |  DOUBLEVAL:e
+    ;
+
+tipo ::= INTEGER
+        | BOOLEAN
+        | STRING
+        | DOUBLE
+        | SHORT
+;
