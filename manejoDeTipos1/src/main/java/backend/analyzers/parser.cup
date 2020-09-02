@@ -1,9 +1,16 @@
 package backend.analyzers;
 import java_cup.runtime.Symbol;
+import backend.tablas.TypeVar;
+import backend.tablas.Constante;
+import backend.manejadores.TypeManejador; 
 
 parser code {:
+
+        public TypeManejador manejadorTipos;
+
         public parser(AnalizadorLexico lex) { 
-            super(lex);   
+            super(lex);
+            manejadorTipos=new TypeManejador();
 	}
         public void syntax_error(Symbol s){
             System.out.println("ERROR: "+" Error Sintaxis token: " + s.value);
@@ -14,14 +21,15 @@ parser code {:
         
 :}
 
-/* Terminals (tokens returned by the scanner). */
-terminal           DPUNTO,SHORT,IGUAL,VAR,MAS, MENOS,POR, DIV,PARA,PARC,INTEGER,BOOLEAN,STRING,DOUBLE,COMA;
+/* Terminals (tokens RESULT =ed by the scanner). */
+terminal           DPUNTO,PUNTOYCOMA,SHORT,IGUAL,VAR,MAS, MENOS,POR, DIV,PARA,PARC,INTEGER,BOOLEAN,STRING,DOUBLE,COMA;
 terminal Integer   INTEGERVAL;
 terminal String    ID,STRINGVAL;
 terminal Double    DOUBLEVAL; 
 /* Non-terminals */
-non terminal            s,declararVar,valor,tipo;
+non terminal            s;
 non terminal Integer operacion;
+non terminal TypeVar tipo,valor,declararVar;
 
 precedence left MAS, MENOS; 
 precedence left POR, DIV;
@@ -29,27 +37,27 @@ precedence left POR, DIV;
 /* The grammar */
 start with s;
 
-s ::=  VAR declararVar
+s ::=  VAR declararVar:e {:System.out.println(e.getNombre());:}
 ;
 
-declararVar::= ID COMA declararVar
-            |  ID DPUNTO tipo
-            |  ID IGUAL valor COMA declararVar
-            |   ID IGUAL valor DPUNTO tipo
+declararVar::= ID COMA declararVar:e {:RESULT = e;:}
+            |  ID DPUNTO tipo:e {:RESULT = e;:}
+            |  ID IGUAL valor:a COMA declararVar:e {:RESULT = parser.manejadorTipos.getType(a,e);:}
+            |   ID IGUAL valor:a DPUNTO tipo:e {:RESULT = parser.manejadorTipos.getType(a,e);:}
 ;
 
-valor ::= valor:a MAS valor:e 
-               |  valor:a MENOS valor:e 
-               |  valor:a POR valor:e 
-               |  valor:a DIV valor:e 
-               |  PARA valor:e PARC 
-               |  INTEGERVAL:e
-               |  DOUBLEVAL:e
+valor ::= valor:a MAS valor:e {:RESULT = parser.manejadorTipos.getType(a,e);:}
+               |  valor:a MENOS valor:e {:RESULT = parser.manejadorTipos.getType(a,e);:}
+               |  valor:a POR valor:e {:RESULT = parser.manejadorTipos.getType(a,e);:} 
+               |  valor:a DIV valor:e {:RESULT = parser.manejadorTipos.getType(a,e);:} 
+               |  PARA valor:e PARC {:RESULT = e;:}
+               |  INTEGERVAL:e {:RESULT = Constante.intVar;:}
+               |  DOUBLEVAL:e {:RESULT = Constante.doubleVar;:}
     ;
 
-tipo ::= INTEGER
-        | BOOLEAN
-        | STRING
-        | DOUBLE
-        | SHORT
+tipo ::= INTEGER {:RESULT = Constante.intVar;:}
+        | BOOLEAN {:RESULT = Constante.booleanaVar;:}
+        | STRING {:RESULT = Constante.stringVar;:}
+        | DOUBLE {:RESULT = Constante.doubleVar;:}
+        | SHORT {:RESULT = Constante.shortVar;:}
 ;
