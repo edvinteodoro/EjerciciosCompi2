@@ -9,6 +9,7 @@ import java_cup.runtime.Symbol;
 import backend.tablas.TypeVar;
 import backend.tablas.Constante;
 import backend.manejadores.TypeManejador;
+import backend.tablas.Simbolo;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 generated parser.
@@ -34,11 +35,11 @@ public class parser extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\022\000\002\002\004\000\002\002\004\000\002\006" +
-    "\005\000\002\006\005\000\002\006\007\000\002\006\007" +
-    "\000\002\005\005\000\002\005\005\000\002\005\005\000" +
-    "\002\005\005\000\002\005\005\000\002\005\003\000\002" +
-    "\005\003\000\002\004\003\000\002\004\003\000\002\004" +
+    "\000\022\000\002\002\004\000\002\002\004\000\002\005" +
+    "\005\000\002\005\005\000\002\005\007\000\002\005\007" +
+    "\000\002\006\005\000\002\006\005\000\002\006\005\000" +
+    "\002\006\005\000\002\006\005\000\002\006\003\000\002" +
+    "\006\003\000\002\004\003\000\002\004\003\000\002\004" +
     "\003\000\002\004\003\000\002\004\003" });
 
   /** Access to production table. */
@@ -82,17 +83,17 @@ public class parser extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\042\000\004\002\004\001\001\000\004\006\007\001" +
+    "\000\042\000\004\002\004\001\001\000\004\005\007\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\006\043\001\001\000\004\005" +
+    "\000\002\001\001\000\004\005\043\001\001\000\004\006" +
     "\022\001\001\000\004\004\017\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\004\005\025\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\005\036\001\001\000\002\001\001" +
-    "\000\004\005\035\001\001\000\004\005\034\001\001\000" +
-    "\004\005\033\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\004\006\042\001" +
+    "\001\001\000\004\006\025\001\001\000\002\001\001\000" +
+    "\002\001\001\000\004\006\036\001\001\000\002\001\001" +
+    "\000\004\006\035\001\001\000\004\006\034\001\001\000" +
+    "\004\006\033\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\004\005\042\001" +
     "\001\000\004\004\041\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001" });
 
@@ -145,6 +146,12 @@ public class parser extends java_cup.runtime.lr_parser {
         }
         public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
             
+        }
+
+        public Symbol getSimbolo(Double valor){
+            Symbol resultado= this.cur_token;
+            resultado.value=valor;
+            return resultado;
         }
         
 
@@ -203,11 +210,14 @@ class CUP$parser$actions {
           case 2: // declararVar ::= ID COMA declararVar 
             {
               TypeVar RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = e;
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("declararVar",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		parser.manejadorTipos.agregarVariable(a,e);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("declararVar",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
@@ -215,11 +225,14 @@ class CUP$parser$actions {
           case 3: // declararVar ::= ID DPUNTO tipo 
             {
               TypeVar RESULT =null;
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = e;
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("declararVar",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		RESULT = parser.manejadorTipos.agregarVariable(a,e);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("declararVar",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
@@ -227,14 +240,17 @@ class CUP$parser$actions {
           case 4: // declararVar ::= ID IGUAL valor COMA declararVar 
             {
               TypeVar RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		TypeVar a = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = parser.manejadorTipos.getType(a,e);
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("declararVar",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Simbolo e = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		TypeVar c = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT = parser.manejadorTipos.agregarVariable(a,e,c);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("declararVar",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
@@ -242,110 +258,113 @@ class CUP$parser$actions {
           case 5: // declararVar ::= ID IGUAL valor DPUNTO tipo 
             {
               TypeVar RESULT =null;
-		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
-		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		TypeVar a = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
-		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
-		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = parser.manejadorTipos.getType(a,e);
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("declararVar",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).left;
+		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)).right;
+		String a = (String)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-4)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
+		Simbolo e = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		int cleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
+		int cright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
+		TypeVar c = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT = parser.manejadorTipos.agregarVariable(a,e,c);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("declararVar",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 6: // valor ::= valor MAS valor 
             {
-              TypeVar RESULT =null;
+              Simbolo RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		TypeVar a = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		Simbolo a = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = parser.manejadorTipos.getType(a,e);
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		Simbolo e = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT = parser.manejadorTipos.operar(a,"+",e);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 7: // valor ::= valor MENOS valor 
             {
-              TypeVar RESULT =null;
+              Simbolo RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		TypeVar a = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		Simbolo a = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = parser.manejadorTipos.getType(a,e);
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		Simbolo e = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT = parser.manejadorTipos.operar(a,"-",e);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 8: // valor ::= valor POR valor 
             {
-              TypeVar RESULT =null;
+              Simbolo RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		TypeVar a = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		Simbolo a = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = parser.manejadorTipos.getType(a,e);
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		Simbolo e = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT = parser.manejadorTipos.operar(a,"*",e);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 9: // valor ::= valor DIV valor 
             {
-              TypeVar RESULT =null;
+              Simbolo RESULT =null;
 		int aleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).left;
 		int aright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)).right;
-		TypeVar a = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
+		Simbolo a = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-2)).value;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = parser.manejadorTipos.getType(a,e);
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		Simbolo e = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT = parser.manejadorTipos.operar(a,"/",e);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 10: // valor ::= PARA valor PARC 
             {
-              TypeVar RESULT =null;
+              Simbolo RESULT =null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
-		TypeVar e = (TypeVar)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		Simbolo e = (Simbolo)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
 		RESULT = e;
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",3, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-2)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 11: // valor ::= INTEGERVAL 
             {
-              TypeVar RESULT =null;
+              Simbolo RESULT =null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
-		Integer e = (Integer)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = Constante.intVar;
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",3, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		Double e = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
+		RESULT = new Simbolo(Constante.intVar,parser.getSimbolo(e));
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 12: // valor ::= DOUBLEVAL 
             {
-              TypeVar RESULT =null;
+              Simbolo RESULT =null;
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Double e = (Double)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		RESULT = Constante.doubleVar;
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",3, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+		RESULT = new Simbolo(Constante.doubleVar,parser.getSimbolo(e));
+              CUP$parser$result = parser.getSymbolFactory().newSymbol("valor",4, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 

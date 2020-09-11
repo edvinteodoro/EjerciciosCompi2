@@ -4,6 +4,8 @@ package gui;
 import backend.analyzers.AnalizadorLexico;
 import backend.analyzers.parser;
 import java.io.StringReader;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
 
 /*
@@ -81,7 +83,8 @@ public class pantalla extends javax.swing.JFrame {
             String text = jTextArea1.getText();
             AnalizadorLexico lexico = new AnalizadorLexico(new StringReader(text));
             Symbol parse = new parser(lexico).parse();
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            Logger.getLogger(pantalla.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
